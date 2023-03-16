@@ -96,11 +96,11 @@ def orbit_length_partition_set(F, f, r):
 		R = compute_resolvent(F, f, r)
 
 	facts = [fact[0] for fact in factor_list(R)[1]]
-	OLP = [degree(fac) for fac in facts]
+	OLP = tuple(degree(fac) for fac in facts)
 
 	return OLP
 
-def orbit_length_partition_seq(f, r):
+def orbit_length_partition_seq(f, r) -> tuple:
 
 	a = generate_a()
 	F = seq_funct(a)
@@ -112,7 +112,7 @@ def orbit_length_partition_seq(f, r):
 		R = compute_resolvent(F, f, r)
 
 	facts = [fact[0] for fact in factor_list(R)[1]]
-	OLP = [degree(fac) for fac in facts]
+	OLP = tuple(degree(fac) for fac in facts)
 
 	return OLP
 
@@ -127,11 +127,74 @@ def seq_funct(a):
 		return a[0]*x[0] + a[1]*x[1]
 	return L2
 
+def deg2(f):
+	return 'S2'
+
+def deg3(f):
+	x = Symbol('x')
+	disc = discriminant(f, gens=x)
+	return '+A3' if sqrt(disc).is_rational else 'S3'
+
+def deg4(f):
+	x = Symbol('x')
+
+	olp2 = orbit_length_partition_set(lambda x: x[0] + x[1], f, 2)
+
+	if olp2 == (2, 2, 2): return '+V4'
+	if olp2 == (6,):
+		disc = discriminant(f, gens=x)
+		return '+A4' if sqrt(disc).is_rational else 'S4'
+
+	olp2seq = () #TODO
+
+	if olp2seq == (4, 4, 4): return 'Z4'
+	return 'D4'
+
+def deg5(f):
+	x = Symbol('x')
+
+	olp2 = orbit_length_partition_set(lambda x: x[0] + x[1], f, 2)
+
+	if olp2 == (10,):
+		disc = discriminant(f, gens=x)
+		if sqrt(disc).is_rational: return '+A5'
+
+		#TODO falta diferenciar entre F20 y S5
+
+	olp2seq = () #TODO
+
+	if olp2seq == (5,5,5,5): return '+Z5'
+	return '+D5'
+
+def deg6(f):
+	#TODO
+	return 0
+
+def deg7(f):
+	x = Symbol('x')
+
+	olp2 = orbit_length_partition_set(lambda x: x[0] + x[1], f, 2)
+	olp3 = orbit_length_partition_set(lambda x: x[0] + x[1] + x[2], f, 3)
+
+	if olp2 == (7,7,7):
+		if olp3 == (7,7,7,7,7): return '+Z7'
+		else: return 'D7'
+
+	if olp3 == (7,7,21): return '+F21'
+	if olp3 == (14, 21): return 'F42'
+	if olp3 == (7,28): return '+PSL3(2)'
+
+	disc = discriminant(f, gens=x)
+	print(olp2 == (21,))
+	return '+A7' if sqrt(disc).is_rational else 'S7'
+
 x = Symbol('x')
 
 #f = Poly(x**7 - 14*x**5 + 56*x**3 - 56*x + 22, x)
-f = Poly(x**6 + 108, x)
+f = Poly(x**7 - 7*x**3 + 14*x**2 - 7*x + 1, x)
 
+print(deg7(f))
+'''
 op2s = orbit_length_partition_set(lambda x: x[0] + x[1], f, 2)
 op3s = orbit_length_partition_set(L3, f, 3)
 op2sq = orbit_length_partition_seq(f, 2)
@@ -139,3 +202,4 @@ op2sq = orbit_length_partition_seq(f, 2)
 print(op2s)
 print(op3s)
 print(op2sq)
+'''
