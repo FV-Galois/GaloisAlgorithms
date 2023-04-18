@@ -4,6 +4,9 @@ def permute_list(lst, perm):
 
     permuted_lst = [None] * len(lst)
     for i in range(len(lst)):
-        permuted_lst[perm(i)] = lst[i]
+        try:
+            permuted_lst[perm(i)] = lst[i]
+        except:
+            permuted_lst[i] = lst[i]
     return permuted_lst
 
