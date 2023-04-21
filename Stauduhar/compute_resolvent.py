@@ -13,7 +13,7 @@ def compute_resolvent_roots(f_roots, F, perm_lst, tol=10e-10):
         permuted_roots = permute_list(f_roots, perm)
         root_of_F = F(permuted_roots)
 
-        if abs(im(root_of_F)) < tol and abs(re(root_of_F).round() - root_of_F) < tol:
+        if abs(im(root_of_F)) < tol and abs(re(root_of_F).round() - re(root_of_F)) < tol:
             int_root = re(root_of_F).round()
             if int_root in R_int_roots:
                 raise ValueError('The resolvent has a repeated integer root')
