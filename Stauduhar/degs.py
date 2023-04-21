@@ -4,7 +4,12 @@ from sympy import symbols, Poly, nroots, discriminant
 from sympy.combinatorics import Permutation
 from sympy.ntheory.primetest import is_square
 
-def deg4(f):
+def deg_3(f):
+    if is_square(discriminant(f)):
+        return 'A3'
+    else:
+        return 'S3'
+def deg_4(f):
 
     f_roots = nroots(f, n=15)
 
