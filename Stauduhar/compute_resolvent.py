@@ -6,7 +6,7 @@ def compute_resolvent_roots(f_roots, F, perm_lst, tol=10e-10):
     x = symbols('x')
 
     R_int_roots = set()
-    integer_root, integer_perm = None, None
+    integer_perm = None
 
     for perm in perm_lst:
 
@@ -19,7 +19,6 @@ def compute_resolvent_roots(f_roots, F, perm_lst, tol=10e-10):
                 raise ValueError('The resolvent has a repeated integer root')
             else:
                 R_int_roots.add(int_root)
-                integer_root = int_root
                 integer_perm = perm
 
     return integer_perm
