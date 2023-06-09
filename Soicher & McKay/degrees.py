@@ -1,4 +1,4 @@
-from orbit_length_functions import orbit_length_partition_set, orbit_length_partition_seq
+from soimk import orbit_length_partition_set, orbit_length_partition_seq
 from collections import Counter
 from sympy import *
 

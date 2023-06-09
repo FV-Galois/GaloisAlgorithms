@@ -8,8 +8,8 @@ def orbit_length_partition_set(F, f, r):
 	R = compute_resolvent(F, f, r, False)
 
 	while(has_repeated_roots(R)):
-		f = tsc_trans(f)
-		R = compute_resolvent(F, f, r, False)
+		ft = tsc_trans(f)
+		R = compute_resolvent(F, ft, r, False)
 
 	facts = [fact[0] for fact in factor_list(R)[1]]
 	OLP = Counter([degree(fac) for fac in facts])
@@ -55,6 +55,7 @@ def compute_resolvent(F, f, r, ordered):
 	return R
 
 def tsc_trans(f):
+	raise NotImplementedError("The tsc trans does not work")
 
 	def tsc_trans_aux(f): #Computes a possible Tschirnhaus transformation
 
