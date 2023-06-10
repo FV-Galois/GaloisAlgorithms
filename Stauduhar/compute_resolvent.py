@@ -12,7 +12,7 @@ def compute_resolvent_roots(f_roots, F, perm_lst, tol=10e-10): #Non exact approa
     for perm in perm_lst:
 
         permuted_roots = permute_list(f_roots, perm)
-        root_of_F = F(permuted_roots)
+        root_of_F = N(F(permuted_roots),20)
 
         if abs(im(root_of_F)) < tol and abs(re(root_of_F).round() - re(root_of_F)) < tol:
             int_root = re(root_of_F).round()
@@ -86,7 +86,7 @@ def generate_resolvent(roots):
 
 def coefs_from_roots(roots):
 
-    return [1] + [re(coef.simplify()).round() for coef in rec_coefs_from_roots(roots, [1])[1:]]
+    return [1] + [re(N(coef, 10)).round() for coef in rec_coefs_from_roots(roots, [1])[1:]]
 def rec_coefs_from_roots(roots, coefs): #coefs are in descending order a_n,a_n-1, ..., a_0
 
     if len(roots) == 0:

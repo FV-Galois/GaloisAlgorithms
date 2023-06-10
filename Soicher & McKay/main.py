@@ -1,5 +1,5 @@
 from degrees import *
 
 x = Symbol('x')
-f = Poly(x**6 + 2, x)
-print(deg6(f))
+f = Poly(x**7 + 1, x)
+print(deg7(f))

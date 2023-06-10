@@ -44,7 +44,7 @@ def compute_resolvent(F, f, r, ordered):
 		if ordered: R_roots.append(F(p[::-1]))
 
 	R = Poly(1, x)
-	for root in R_roots:	#Computes R(F,f)
+	for root in R_roots: #Computes R(F,f)
 		R *= Poly(x - root, x, domain='CC')
 
 	coeffs = R.all_coeffs()
@@ -55,7 +55,7 @@ def compute_resolvent(F, f, r, ordered):
 	return R
 
 def tsc_trans(f):
-	raise NotImplementedError("The tsc trans does not work")
+	#raise NotImplementedError("The tsc trans does not work")
 
 	def tsc_trans_aux(f): #Computes a possible Tschirnhaus transformation
 
@@ -65,14 +65,15 @@ def tsc_trans(f):
 		f = f.subs(x, y)
 
 		n = degree(f)
-		deg = randint(1, n - 1)
+		deg = randint(1, n)
 
 		g = Poly(1, y)
 
-		for i in range(deg): #generates a random polynomial
-			g *= Poly(y - randint(-10, 10))
+		for i in range(deg+1): #generates a random polynomial
+			g += Poly(randint(-10, 10)*y**i, y)
 
 		u = resultant(f, Poly(x, x) - g, gens=y)
+		u = Poly(u, x)
 
 		u = u.subs(y, x)
 		udif = diff(u, x)
