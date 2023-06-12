@@ -21,7 +21,7 @@ def deg_4(f):
             return 'A4'
         else:
             return 'S4'
-    permute_list(f_roots, fix_perm)
+    f_roots = permute_list(f_roots, fix_perm)
 
     F_G41 = lambda x: x[0]*x[1]*x[1] + x[1]*x[2]*x[2] + x[2]*x[3]*x[3] + x[3]*x[0]*x[0]
     G41_RC = [Permutation(3), Permutation(0,1)(2,3)]
@@ -47,7 +47,7 @@ def deg_5(f):
             return 'A5'
         else:
             return 'S5'
-    permute_list(f_roots, fix_perm)
+    f_roots = permute_list(f_roots, fix_perm)
 
     if not is_square(discriminant(f)):
         return 'G20'
@@ -62,8 +62,107 @@ def deg_5(f):
         return 'G5'
 
 def deg_6(f):
-    #TODO
-    return
+
+    f_roots = nroots(f, n=15)
+
+    F_G120 = lambda x: (x[0]*x[1]+x[2]*x[4]+x[3]*x[5])*(x[0]*x[2]+x[3]*x[4]+x[1]*x[5])*(x[2]*x[3]+x[0]*x[5]+x[1]*x[4])*(x[0]*x[4]+x[1]*x[3]+x[2]*x[5])*(x[0]*x[3]+x[1]*x[2]+x[4]*x[5])
+    G120_RC = [Permutation(5), Permutation(0,2), Permutation(1,2), Permutation(0,1,2), Permutation(0,2,1), Permutation(0,1)]
+    fix_perm = return_integer_permutation(f_roots, F_G120, G120_RC)
+
+    if fix_perm is not None:
+        if is_square(discriminant(f)):
+            return 'AG60'
+        return 'G120'
+
+    F_G72 = lambda x: x[0]*x[1]*x[2]+x[3]*x[4]*x[5]
+    G72_RC = [Permutation(5), Permutation(1,4,3,2), Permutation(1,2,5)(3,4), Permutation(1,4,3,2,5), Permutation(1,4)(2,3), Permutation(1,3,4,2), Permutation(1,4),
+              Permutation(1,2,3,4), Permutation(1,3,4,2,5), Permutation(2,5,3,4)]
+    fix_perm = return_integer_permutation(f_roots, F_G72, G72_RC)
+
+    if fix_perm is not None:
+
+        f_roots = permute_list(f_roots, fix_perm)
+
+        F_G236 = lambda x: (x[0]-x[1])*(x[1]-x[2])*(x[2]-x[0])*(x[3]-x[4])*(x[4]-x[5])*(x[5]-x[3])
+        G236_RC = [Permutation(5), Permutation(4,5)]
+        fix_perm = return_integer_permutation(f_roots, F_G236, G236_RC)
+
+        if fix_perm is not None:
+
+            f_roots = permute_list(f_roots, fix_perm)
+
+            F_G18 = lambda x: (x[0]-x[1])*(x[1]-x[2])*(x[2]-x[0])+(x[3]-x[4])*(x[4]-x[5])*(x[5]-x[3])
+            G18_RC = [Permutation(5), Permutation(0,1)(3,4), Permutation(4,5), Permutation(0,1)(3,5,4)]
+            fix_perm = return_integer_permutation(f_roots, F_G18, G18_RC)
+
+            if fix_perm is not None:
+
+                f_roots = permute_list(f_roots, fix_perm)
+
+                F_G16 = lambda x: x[0]*x[3]+x[1]*x[5]+x[2]*x[4]
+                G16_RC = [Permutation(5), Permutation(0,1,2), Permutation(0,2,1)]
+                fix_perm = return_integer_permutation(f_roots, F_G16, G16_RC)
+
+                if fix_perm is not None:
+                    return 'G^1_6'
+
+                F_G26 = lambda x: x[0]*x[5]*x[5]+x[1]*x[3]*x[3]+x[2]*x[4]*x[4]+x[3]*x[1]*x[1]+x[4]*x[0]*x[0]+x[5]*x[1]*x[1]
+                G26_RC = [Permutation(5), Permutation(0, 1, 2), Permutation(0, 2, 1)]
+                fix_perm = return_integer_permutation(f_roots, F_G26, G26_RC)
+
+                if fix_perm is not None:
+                    return 'G^2_6'
+                else:
+                    return 'G18'
+
+            else:
+                if is_square(discriminant(f)):
+                    return 'G^2_36'
+                return 'G^1_12'
+        else:
+            if is_square(discriminant(f)):
+                return 'AG^1_36'
+            return 'G72'
+
+    F_G48 = lambda x: x[0]*x[1]+x[2]*x[3]+x[4]*x[5]
+    G48_RC = [Permutation(5), Permutation(1,3,5,2,4), Permutation(1,5)(2,4), Permutation(2,4,3), Permutation(1,2,3,4), Permutation(1,4,2), Permutation(2,3,4), Permutation(1,4,5)(2,3),
+              Permutation(1,5,3,2,4), Permutation(1,2,3,5), Permutation(1,2,3), Permutation(1,4)(2,5), Permutation(1,3,2,4), Permutation(1,3)(2,4), Permutation(1,5,4,3,2)]
+    fix_perm = return_integer_permutation(f_roots, F_G48, G48_RC)
+
+    if fix_perm is not None:
+
+        f_roots = permute_list(f_roots, fix_perm)
+
+        F_G124 = lambda x: (x[0]+x[1]-x[2]-x[3])*(x[1]+x[3]-x[4]-x[5])*(x[4]-x[5]-x[0]-x[5])*(x[0]-x[1])*(x[2]-x[3])*(x[4]-x[5])
+        G124_RC = [Permutation(5), Permutation(0,1)]
+        fix_perm = return_integer_permutation(f_roots, F_G124, G124_RC)
+
+        if fix_perm is not None:
+            return 'G^1_24'
+
+        F_G224 = lambda x: (x[0]+x[1]-x[2]-x[3])*(x[1]+x[3]-x[4]-x[5])*(x[4]+x[5]-x[0]-x[1])
+        G224_RC = [Permutation(5), Permutation(0,2)(1,3)]
+        fix_perm = return_integer_permutation(f_roots, F_G224, G224_RC)
+
+        if fix_perm is not None:
+            return 'G^2_24'
+
+        if is_square(discriminant(f)):
+
+            F_G212 = lambda x:  (x[0]+x[1]-x[2]-x[3])*(x[1]+x[3]-x[4]-x[5])*(x[4]+x[5]-x[0]-x[1])
+            G212_RC = [Permutation(5), Permutation(0,2)(1,3)]
+            fix_perm = return_integer_permutation(f_roots, F_G212, G212_RC)
+
+            if fix_perm is not None:
+                return 'G^2_12'
+            else:
+                return 'AG^3_24'
+        else:
+            return 'G48'
+
+    if is_square(discriminant(f)):
+        return 'A6'
+    return 'S6'
 
 def deg_7(f):
 
@@ -81,14 +180,14 @@ def deg_7(f):
 
     if fix_perm is not None:
 
-        permute_list(f_roots, fix_perm)
+        f_roots = permute_list(f_roots, fix_perm)
 
         F_G21 = lambda x: x[0] * x[1] * x[3] + x[0] * x[1] * x[5] + x[0] * x[2] * x[3] + x[0] * x[2] * x[6] + x[0] * x[4] * x[5] + x[0] * x[4] * x[6] + x[1] * x[2] * x[4] + x[1] * x[2] * x[6] + x[1] * x[3] * x[4] + x[1] * x[5] * x[6] + x[2] * x[3] * x[5] + x[2] * x[4] * x[5] + x[3] * x[4] * x[6] + x[3] * x[5] * x[6]
         G21_RC = [Permutation(6), Permutation(2,6)(4,5), Permutation(1,2)(6,3), Permutation(1,2,3,6)(4,5), Permutation(1,3)(4,5), Permutation(1,3)(2,6), Permutation(1,6,3,2)(4,5), Permutation(1,6)(2,3)]
         fix_perm = compute_resolvent_roots(f_roots, F_G21, G21_RC)
         if fix_perm is not None:
 
-            permute_list(f_roots, fix_perm)
+            f_roots = permute_list(f_roots, fix_perm)
 
             F_G7 = lambda x: x[0]*x[1] + x[1]*x[2] + x[2]*x[3] + x[3]*x[4] + x[4]*x[5] + x[5]*x[6] + x[6]*x[0]
             G7_RC = [Permutation(6), Permutation(1,2,4)(3,6,5), Permutation(1,4,2)(3,5,6)]
@@ -123,7 +222,7 @@ def deg_7(f):
     fix_perm = compute_resolvent_roots(f_roots, F_G42, G42_RC)
     if fix_perm is not None:
 
-        permute_list(f_roots, fix_perm)
+        f_roots = permute_list(f_roots, fix_perm)
 
         F_G14 = lambda x: x[0]*x[1] + x[1]*x[2] + x[2]*x[3] + x[3]*x[4] + x[4]*x[5] + x[5]*x[6] + x[6]*x[0]
         G14_RC = [Permutation(7), Permutation(1,2,4)(3,6,5), Permutation(1,4,2)(3,5,6)]
